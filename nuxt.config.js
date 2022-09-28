@@ -81,6 +81,7 @@ export default {
     color: '#212121',
     background: 'white'
   },
+
   env: {
     FIXER_API: process.env.FIXER_API,
     RAPID_API: process.env.RAPID_API,
