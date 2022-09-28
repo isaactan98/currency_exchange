@@ -1,19 +1,19 @@
 <template>
-  <main class="container lg:w-3/5 mx-auto">
-    <div class="lg:hero min-h-screen px-4 lg:px-2">
+  <main class="w-4/5 md:w-3/5 mx-auto">
+    <div class="min-h-screen px-4 xl:px-2">
       <!-- <div class="hero-overlay bg-opacity-60"></div> -->
-      <div class="mt-8 lg:mt-0">
-        <div class="text-center mb-8 lg:mb-12">
-          <h1 class="text-3xl lg:text-5xl font-bold mb-4">
+      <div class="mt-8 xl:mt-0">
+        <div class="text-center mb-8 xl:mb-12">
+          <h1 class="text-3xl xl:text-5xl font-bold mb-4">
             The World's Trusted Currency Authority
           </h1>
-          <p class="text-xs lg:text-base">
+          <p class="text-xs xl:text-base">
             Check exchange rates, send money internationally, and free currency
             tools
           </p>
         </div>
         <div
-          class="border border-stone-200 dark:border-stone-700 rounded-md p-8 lg:p-12 shadow-md"
+          class="border border-stone-200 dark:border-stone-700 rounded-md p-8 xl:p-12 shadow-md"
         >
           <div class="form-control col-span-1">
             <label for="" class="label">
@@ -37,7 +37,7 @@
           </div>
 
           <div
-            class="grid lg:flex justify-between grid-cols-1 gap-4 mt-4"
+            class="grid xl:flex justify-between grid-cols-1 gap-4 mt-4"
             id="exchange"
             style="display: none"
           >
@@ -92,13 +92,13 @@
           </div>
           <div class="mt-6">
             <div class="font-bold mb-6 hidden" id="result_col">
-              <p class="text-lg lg:text-2xl">
+              <p class="text-lg xl:text-2xl">
                 <span id="ori">1.00 US Dollar</span> =
               </p>
-              <p class="text-2xl lg:text-5xl" id="result">1.00 US Dollar</p>
+              <p class="text-2xl xl:text-5xl" id="result">1.00 US Dollar</p>
             </div>
             <div class="flex justify-end">
-              <button class="btn btn-primary w-full lg:w-auto" id="convert">
+              <button class="btn btn-primary w-full xl:w-auto" id="convert">
                 Convert
               </button>
             </div>
@@ -112,7 +112,7 @@
             </div>
           </div>
           <div>
-            <p class="text-xs mt-4 text-justify lg:text-left">
+            <p class="text-xs mt-4 text-justify xl:text-left">
               <span class="font-bold">Disclaimer:</span> This is a demo
               application. The exchange rates are provided by third-party
               providers and are subject to change. The exchange rates are

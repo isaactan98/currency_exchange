@@ -65,7 +65,7 @@ export default {
       },
     },
   },
-  ssr: false,
+
   loadingIndicator: {
     name: 'nuxt',
     color: '#3B8070',
