@@ -1,5 +1,5 @@
 <template>
-  <main class="w-4/5 md:w-3/5 mx-auto">
+  <main class="md:w-3/5 mx-auto">
     <div class="min-h-screen px-4 xl:px-2">
       <!-- <div class="hero-overlay bg-opacity-60"></div> -->
       <div class="mt-8 xl:mt-0">

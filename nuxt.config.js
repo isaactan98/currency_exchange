@@ -9,7 +9,17 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'A lightweight PWA currency changing platform.' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
+      { name: 'theme-color', content: '#212121' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      { name: 'apple-mobile-web-app-title', content: 'Exchange Currency' },
+      { name: 'application-name', content: 'Exchange Currency' },
+      { name: 'theme-color', content: '#212121' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      { name: 'apple-mobile-web-app-title', content: 'Exchange Currency' },
+      { name: 'application-name', content: 'Exchange Currency' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -68,7 +78,7 @@ export default {
 
   loadingIndicator: {
     name: 'nuxt',
-    color: '#3B8070',
+    color: '#212121',
     background: 'white'
   },
   env: {
