@@ -13,7 +13,7 @@
           </p>
         </div>
         <div
-          class="border border-stone-200 dark:border-stone-500 rounded-md p-12 shadow-md"
+          class="border border-stone-200 dark:border-stone-700 rounded-md p-12 shadow-md"
         >
           <div class="form-control col-span-1">
             <label for="" class="label">
@@ -63,9 +63,11 @@
                 id="from_ipt"
                 v-if="country != null"
               >
-                <option :value="k" v-for="(s, k) in country.symbols" :key="k">
-                  {{ s }}
-                </option>
+                <optgroup v-for="(c, k) in country" :key="k" :label="k">
+                  <option :value="k" v-for="(s, k) in c" :key="k">
+                    {{ s }}
+                  </option>
+                </optgroup>
               </select>
               <div class="btn btn-ghost loading" v-else></div>
             </div>
@@ -79,9 +81,11 @@
                 id="to_ipt"
                 v-if="country != null"
               >
-                <option :value="k" v-for="(s, k) in country.symbols" :key="k">
-                  {{ s }}
-                </option>
+                <optgroup v-for="(c, k) in country" :key="k" :label="k">
+                  <option :value="k" v-for="(s, k) in c" :key="k">
+                    {{ s }}
+                  </option>
+                </optgroup>
               </select>
               <div class="btn btn-ghost loading" v-else></div>
             </div>
@@ -117,7 +121,7 @@ export default {
   name: "HOME",
   data() {
     return {
-      country: null,
+      country: [],
       calculate: null,
       provider: [
         {
@@ -172,11 +176,21 @@ export default {
         const link = e.target.options[e.target.selectedIndex].dataset.link;
 
         exchange.style.display = "";
+        var arr = {};
 
         fetch(link + "symbols", keys(e.target.value))
           .then((response) => response.text())
           .then((result) => {
-            this.country = JSON.parse(result);
+            var countries = JSON.parse(result);
+            Object.entries(countries.symbols).map(([key, value]) => {
+              if (arr[value.charAt(0)] != null) {
+                arr[value.charAt(0)][key] = value;
+              } else {
+                arr[value.charAt(0)] = {};
+                arr[value.charAt(0)][key] = value;
+              }
+            });
+            this.country = arr;
             // console.log(this.country);
           })
           .then(() => {
