@@ -121,7 +121,7 @@ export default {
   name: "HOME",
   data() {
     return {
-      country: [],
+      country: null,
       calculate: null,
       provider: [
         {
@@ -190,7 +190,7 @@ export default {
                 arr[value.charAt(0)][key] = value;
               }
             });
-            this.country = arr;
+            this.country = Object.fromEntries(Object.entries(arr).sort());
             // console.log(this.country);
           })
           .then(() => {
