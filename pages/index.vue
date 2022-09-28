@@ -1,9 +1,9 @@
 <template>
   <main class="container mx-auto">
-    <div class="hero min-h-screen px-3 lg:px-0">
+    <div class="lg:hero min-h-screen px-4 lg:px-2">
       <!-- <div class="hero-overlay bg-opacity-60"></div> -->
-      <div class="">
-        <div class="text-center mb-12">
+      <div class="mt-8 lg:mt-0">
+        <div class="text-center mb-8 lg:mb-12">
           <h1 class="text-3xl lg:text-5xl font-bold mb-4">
             The World's Trusted Currency Authority
           </h1>
@@ -13,7 +13,7 @@
           </p>
         </div>
         <div
-          class="border border-stone-200 dark:border-stone-700 rounded-md p-12 shadow-md"
+          class="border border-stone-200 dark:border-stone-700 rounded-md p-8 lg:p-12 shadow-md"
         >
           <div class="form-control col-span-1">
             <label for="" class="label">
@@ -102,6 +102,10 @@
                 Convert
               </button>
             </div>
+            <div id="show_one" class="text-xs mt-4 hidden">
+              <p>1 SDG = 1 MYR</p>
+              <p>1 MYR = 1 SDG</p>
+            </div>
           </div>
           <div class="toast hidden" id="error">
             <div class="alert alert-error">
@@ -109,6 +113,16 @@
                 <span id="error_msg">New message arrived.</span>
               </div>
             </div>
+          </div>
+          <div>
+            <p class="text-xs mt-4 text-justify lg:text-left">
+              <span class="font-bold">Disclaimer:</span> This is a demo
+              application. The exchange rates are provided by third-party
+              providers and are subject to change. The exchange rates are
+              provided for informational purposes only and do not constitute
+              financial advice of any kind. We do not guarantee the accuracy of
+              the exchange rates.
+            </p>
           </div>
         </div>
       </div>
@@ -144,6 +158,7 @@ export default {
     const exchange = document.getElementById("exchange");
     const error_col = document.getElementById("error");
     const error_msg = document.getElementById("error_msg");
+    const show_one = document.getElementById("show_one");
 
     const keys = (p) => {
       if (p != "Rapid Api") {
@@ -225,6 +240,39 @@ export default {
                     ori.innerHTML = `${av.toLocaleString()} ${from}`;
                     result.innerHTML = `${this.calculate.result.toLocaleString()} ${to}`;
                     convert.classList.remove("loading");
+
+                    if (amount.value > 1) {
+                      var one = [];
+                      var string = "";
+
+                      show_one.classList.remove("hidden");
+
+                      fetch(
+                        link + `convert?to=${to}&from=${from}&amount=1`,
+                        keys(e.target.value)
+                      )
+                        .then((response) => response.text())
+                        .then((r) => {
+                          this.calculate = JSON.parse(r);
+                          one.push(
+                            `<p>1 ${from} = ${this.calculate.result.toLocaleString()} ${to}</p>`
+                          );
+
+                          string = `<p>1 ${from} = ${this.calculate.result.toLocaleString()} ${to}</p><p>1 ${to} = ${
+                            1 / this.calculate.result.toLocaleString()
+                          } ${from}</p>`;
+                          show_one.innerHTML = string;
+                        })
+                        .catch((error) => {
+                          error_col.classList.remove("hidden");
+                          error_msg.innerHTML = error;
+                          setTimeout(() => {
+                            error_col.classList.add("hidden");
+                          }, 5000);
+                        });
+                    } else {
+                      show_one.classList.add("hidden");
+                    }
                   })
                   .catch((error) => {
                     error_col.classList.remove("hidden");
