@@ -8,8 +8,7 @@
             The World's Trusted Currency Authority
           </h1>
           <p class="text-xs xl:text-base">
-            Check exchange rates, send money internationally, and free currency
-            tools
+            Check exchange rates, and free currency tools
           </p>
         </div>
         <div
