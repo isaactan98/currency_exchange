@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto">
+  <main class="container lg:w-3/5 mx-auto">
     <div class="lg:hero min-h-screen px-4 lg:px-2">
       <!-- <div class="hero-overlay bg-opacity-60"></div> -->
       <div class="mt-8 lg:mt-0">
@@ -102,10 +102,7 @@
                 Convert
               </button>
             </div>
-            <div id="show_one" class="text-xs mt-4 hidden">
-              <p>1 SDG = 1 MYR</p>
-              <p>1 MYR = 1 SDG</p>
-            </div>
+            <div id="show_one" class="text-xs mt-4 hidden"></div>
           </div>
           <div class="toast hidden" id="error">
             <div class="alert alert-error">

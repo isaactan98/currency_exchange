@@ -8,7 +8,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'A lightweight PWA currency changing platform' },
+      { hid: 'description', name: 'description', content: 'A lightweight PWA currency changing platform.' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
@@ -52,7 +52,7 @@ export default {
     manifest: {
       lang: 'en',
       name: "Exchange Currency",
-      short_name: "EC",
+      short_name: "Ec",
     }
   },
 
@@ -65,6 +65,7 @@ export default {
       },
     },
   },
+  ssr: false,
   loadingIndicator: {
     name: 'nuxt',
     color: '#3B8070',
