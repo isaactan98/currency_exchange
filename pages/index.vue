@@ -45,7 +45,7 @@
                 <span class="label-text font-bold">Amount</span>
               </label>
               <input
-                type="text"
+                type="number"
                 placeholder="Type here"
                 class="input input-bordered rounded-md w-full max-w-xs"
                 id="amount"
