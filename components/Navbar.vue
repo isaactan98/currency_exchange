@@ -27,7 +27,7 @@
         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <a href="https://isaactan98.vercel.app/"> Made By Isaac Tan </a>
+          <a href="https://isaactan.vercel.app/"> Made By Isaac Tan </a>
         </li>
       </ul>
     </div>
