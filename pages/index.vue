@@ -190,7 +190,23 @@ export default {
         var arr = {};
 
         fetch(link + "symbols", keys(e.target.value))
-          .then((response) => response.text())
+          .then((response) => {
+            if (response.status == 200) {
+              return response.text();
+            } else {
+              var msg = "";
+              response
+                .text()
+                .then((text) => {
+                  msg = JSON.parse(text);
+                })
+                .then(() => {
+                  error_col.classList.remove("hidden");
+                  error_msg.innerHTML = msg.message;
+                });
+              throw new Error(msg);
+            }
+          })
           .then((result) => {
             var countries = JSON.parse(result);
             Object.entries(countries.symbols).map(([key, value]) => {
@@ -283,6 +299,7 @@ export default {
           .catch((error) => {
             error_col.classList.remove("hidden");
             error_msg.innerHTML = error;
+            // console.log(error);
             setTimeout(() => {
               error_col.classList.add("hidden");
             }, 5000);
