@@ -27,7 +27,15 @@
         class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <a href="https://isaactan.vercel.app/"> Made By Isaac Tan </a>
+          <a v-for="(l, k) in links" :key="k" :href="l.link">
+            {{ l.name }}
+          </a>
+          <a
+            href="https://isaactan.vercel.app/"
+            class="border-t border-zinc-500"
+          >
+            Made By Isaac Tan
+          </a>
         </li>
       </ul>
     </div>
@@ -36,6 +44,24 @@
 
 <script>
 export default {
+  data() {
+    return {
+      links: [
+        {
+          name: "Home",
+          link: "/",
+        },
+        {
+          name: "List",
+          link: "/list",
+        },
+        {
+          name: "About",
+          link: "/about",
+        },
+      ],
+    };
+  },
   mounted() {
     // add shadow to navbar when scrolling
     window.addEventListener("scroll", () => {

@@ -216,7 +216,12 @@ export default {
                 arr[value.charAt(0)] = {};
                 arr[value.charAt(0)][key] = value;
               }
+
+              arr[value.charAt(0)] = Object.fromEntries(
+                Object.entries(arr[value.charAt(0)]).sort()
+              );
             });
+
             this.country = Object.fromEntries(Object.entries(arr).sort());
             // console.log(this.country);
           })
