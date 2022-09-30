@@ -90,7 +90,7 @@
       </div>
     </div>
     <div class="max-w-xl px-4 mx-auto grid items-center" v-else>
-      <label for="" class="btn loading"></label>
+      <label for="" class="btn btn-ghost loading"></label>
     </div>
     <!-- search country -->
     <input type="checkbox" id="show_country" class="modal-toggle" />
@@ -164,10 +164,12 @@
         </div>
       </div>
     </div>
+    <ErrorToast :message="message" v-if="message != null"></ErrorToast>
   </main>
 </template>
 
 <script>
+import ErrorToast from "~/components/ErrorToast.vue";
 export default {
   head() {
     return {
@@ -180,42 +182,54 @@ export default {
       value: 0,
       country: null,
       current_currency: null,
+      message: null,
     };
   },
+  components: { ErrorToast },
   mounted() {
-    const check_value = new Promise((resolve, reject) => {
-      if (localStorage.getItem("current_currency") != null) {
+    const getUserCountry = new Promise((resolve, reject) => {
+      if (localStorage.getItem("current_currency")) {
         resolve(localStorage.getItem("current_currency"));
       } else {
-        reject("No currency");
+        fetch("https://ipapi.co/json/")
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("current_currency", data.currency);
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       }
     });
-
-    if (localStorage.getItem("current_currency") != null) {
-      check_value
-        .then((res) => {
-          this.current_currency = res;
-          this.getCountry();
-        })
-        .then(() => {
-          if (localStorage.getItem("value") != null) {
-            this.value = JSON.parse(localStorage.getItem("value"));
-          } else {
-            this.value = 1;
-            localStorage.setItem("value", this.value);
-          }
-
-          if (localStorage.getItem("currency") != null) {
-            this.currency = JSON.parse(localStorage.getItem("currency"));
-            this.getConvert();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      this.getCurrentCountry();
-    }
+    getUserCountry
+      .then(() => {
+        console.log(localStorage.getItem("current_currency"));
+      })
+      .then(() => {
+        this.current_currency = localStorage.getItem("current_currency");
+        this.getCountry();
+      })
+      .then(() => {
+        if (localStorage.getItem("value") != null) {
+          this.value = JSON.parse(localStorage.getItem("value"));
+          document.getElementById("default").value =
+            localStorage.getItem("value") || 1;
+        } else {
+          this.value = 1;
+          localStorage.setItem("value", this.value);
+        }
+        if (localStorage.getItem("currency") != null) {
+          this.currency = JSON.parse(localStorage.getItem("currency"));
+          this.getConvert();
+        }
+      })
+      .catch((err) => {
+        this.message = err;
+        setTimeout(() => {
+          this.message = null;
+        }, 5000);
+      });
   },
   methods: {
     async getCountry() {
@@ -246,7 +260,6 @@ export default {
       });
       this.country = Object.fromEntries(Object.entries(arr).sort());
     },
-
     async search(value) {
       const currency = document.querySelectorAll(".currency");
       Array.prototype.forEach.call(currency, function (el) {
@@ -261,62 +274,33 @@ export default {
         }
       });
     },
-
     addCurrency(e) {
       this.currency.push(e);
-
       localStorage.setItem("currency", JSON.stringify(this.currency));
-
       this.getConvert();
     },
-
     deleteCurrency(e) {
       this.currency.splice(this.currency.indexOf(e), 1);
-
       localStorage.setItem("currency", JSON.stringify(this.currency));
-
       this.getConvert();
     },
-
     updateCurrentCurrency(e) {
       this.current_currency = e.target.value;
+      console.log(e.target.value);
       localStorage.setItem("current_currency", e.target.value);
     },
-
     updateValue(e) {
       this.value = e.target.value;
-
       localStorage.setItem("value", this.value);
-
-      this.getConvert();
     },
-
-    async getCurrentCountry() {
-      await fetch("https://ipapi.co/currency/")
-        .then((response) => {
-          return response.text();
-        })
-        .then((data) => {
-          this.current_currency = data;
-          localStorage.setItem("current_currency", data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
     async getConvert() {
       if (this.currency.length == 0) {
         alert("Please select currency");
         return;
       }
-
       this.currency = [];
-
       const all_currencies = JSON.parse(localStorage.getItem("currency"));
-
       const def = document.getElementById("default");
-
       all_currencies.forEach((e) => {
         const requestOptions = {
           method: "GET",
@@ -326,7 +310,6 @@ export default {
               "currency-conversion-and-exchange-rates.p.rapidapi.com",
           },
         };
-
         fetch(
           "https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from=" +
             this.current_currency +
@@ -346,7 +329,10 @@ export default {
               data.result;
           })
           .catch(function (error) {
-            console.log(error);
+            this.message = error;
+            setTimeout(() => {
+              this.message = null;
+            }, 5000);
           });
       });
     },
