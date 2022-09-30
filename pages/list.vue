@@ -7,7 +7,7 @@
       <div class="border rounded p-4">
         <div class="flex justify-between items-center border rounded mb-4">
           <div class="flex flex-1 justify-between">
-            <div class="flex items-center">
+            <div class="flex items-center w-1/2">
               <select
                 class="select"
                 name=""
@@ -27,15 +27,13 @@
               </select>
               <label v-else class="btn loading"></label>
             </div>
-            <div>
-              <input
-                type="number"
-                id="default"
-                class="input text-right max-w-xs"
-                value="1"
-                @keyup="updateValue"
-              />
-            </div>
+            <input
+              type="number"
+              id="default"
+              class="input text-right w-1/2"
+              value="1"
+              @keyup="updateValue"
+            />
           </div>
         </div>
 
@@ -58,9 +56,7 @@
           </div>
         </div>
 
-        <div class="w-full" v-else>
-          <div class="btn btn-ghost w-full loading"></div>
-        </div>
+        <div class="w-full" v-else></div>
 
         <div class="flex justify-between mt-4">
           <label
@@ -71,19 +67,20 @@
             + Add Currency
           </label>
           <button class="btn btn-sm rounded" id="refresh" @click="getConvert">
-            <!-- refresh svg -->
+            <!-- refresh icon -->
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              class="inline-block w-5 h-5 stroke-current"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-3 3a3 3 0 100-6 3 3 0 000 6zm9-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              ></path>
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+              />
             </svg>
           </button>
         </div>
@@ -137,7 +134,7 @@
             <div v-for="(cc, kk) in c" :key="kk" class="p-2 currency_parent">
               <label
                 v-if="currency.includes(kk)"
-                class="flex justify-between font-bold currency"
+                class="flex justify-between line-through currency opacity-50"
                 :id="kk"
               >
                 <span class="mr-2">{{ kk }}</span>
