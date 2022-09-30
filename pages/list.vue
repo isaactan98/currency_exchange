@@ -4,10 +4,10 @@
       class="max-w-xl px-4 mx-auto grid items-center"
       v-if="current_currency != null"
     >
-      <div class="border rounded p-4">
+      <div class="border rounded p-4 max-w-xs mx-auto">
         <div class="flex justify-between items-center border rounded mb-4">
-          <div class="flex flex-1 justify-between">
-            <div class="flex items-center w-1/2">
+          <div class="flex justify-between">
+            <div class="flex items-center w-1/3">
               <select
                 class="select"
                 name=""
@@ -48,15 +48,17 @@
           >
             <div class="flex flex-1 justify-between px-2">
               <div class="flex items-center">{{ x }}</div>
-              <input type="number" class="input text-right" />
+              <div></div>
             </div>
-            <div class="border-l">
+            <div class="border-l delete">
               <button class="btn" @click="deleteCurrency(x)">X</button>
             </div>
           </div>
         </div>
 
-        <div class="w-full" v-else></div>
+        <div class="w-full text-center" v-if="loading">
+          <div class="btn btn-ghost loading"></div>
+        </div>
 
         <div class="flex justify-between mt-4">
           <label
@@ -180,6 +182,7 @@ export default {
       country: null,
       current_currency: null,
       message: null,
+      loading: false,
     };
   },
   components: { ErrorToast },
@@ -201,6 +204,7 @@ export default {
     });
     getUserCountry
       .then(() => {
+        this.loading = true;
         console.log(localStorage.getItem("current_currency"));
       })
       .then(() => {
@@ -220,6 +224,8 @@ export default {
           this.currency = JSON.parse(localStorage.getItem("currency"));
           this.getConvert();
         }
+
+        this.loading = false;
       })
       .catch((err) => {
         this.message = err;
@@ -272,11 +278,24 @@ export default {
       });
     },
     addCurrency(e) {
+      this.loading = true;
       this.currency.push(e);
       localStorage.setItem("currency", JSON.stringify(this.currency));
       this.getConvert();
     },
     deleteCurrency(e) {
+      const del = document.querySelectorAll(".delete");
+      console.log(del.length);
+
+      if (del.length == 1) {
+        this.message = "You can't delete all currency";
+        setTimeout(() => {
+          this.message = null;
+        }, 5000);
+        return;
+      }
+
+      this.loading = true;
       this.currency.splice(this.currency.indexOf(e), 1);
       localStorage.setItem("currency", JSON.stringify(this.currency));
       this.getConvert();
@@ -322,8 +341,10 @@ export default {
           })
           .then((data) => {
             console.log(data);
-            document.getElementById(e).children[0].children[1].value =
+            document.getElementById(e).children[0].children[1].innerHTML =
               data.result;
+
+            this.loading = false;
           })
           .catch(function (error) {
             this.message = error;
