@@ -1,8 +1,8 @@
 <template>
   <main class="min-h-screen mt-4 bg-base-100">
-    <div class="max-w-xl px-4 mx-auto grid items-center" v-if="current_currency != null">
-      <div class="border rounded p-4 max-w-sm mx-auto">
-        <div class="flex justify-between items-center border rounded mb-4">
+    <div class="max-w-xl lg:container px-4 mx-auto grid items-center" v-if="current_currency != null">
+      <div class="border rounded-md p-4 max-w-sm mx-auto">
+        <div class="flex justify-between items-center border-2 border-spacing-1 rounded-md mb-4">
           <div class="flex justify-between">
             <div class="flex items-center w-1/3">
               <select class="select" name="" id="" v-if="country != null" @change="updateCurrentCurrency">
@@ -21,7 +21,7 @@
         <div class="border-b my-4"></div>
 
         <div v-if="currency.length != 0">
-          <div class="flex justify-between items-center border rounded mb-4" v-for="(x, l) in currency" :key="l"
+          <div class="flex justify-between items-center border rounded-md mb-4" v-for="(x, l) in currency" :key="l"
             :id="x">
             <div class="flex flex-1 justify-between px-2 border-r">
               <div class="flex items-center">{{ x }}</div>
@@ -250,10 +250,12 @@ export default {
       localStorage.setItem("value", this.value);
     },
     async getConvert() {
+
       if (this.currency.length == 0) {
         alert("Please select currency");
         return;
       }
+
       this.currency = [];
       const all_currencies = JSON.parse(localStorage.getItem("currency"));
       const def = document.getElementById("default");
@@ -291,6 +293,7 @@ export default {
             }
 
             this.loading = false;
+
           })
           .catch(function (error) {
             this.message = error;
