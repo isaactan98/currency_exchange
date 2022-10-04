@@ -82,7 +82,8 @@
         <div v-if="country != null" class="mt-4">
           <div v-for="(c, k) in country" :key="k" class="border-b mb-2">
             <div class="flex items-center font-bold text-lg">{{ k }}</div>
-            <div v-for="(cc, kk) in c" :key="kk" class="p-2 currency_parent">
+            <div v-for="(cc, kk) in c" :key="kk"
+              class="p-2 cursor-pointer hover:bg-zinc-400 dark:hover:bg-zinc-600 currency_parent">
               <label v-if="currency.includes(kk)" class="flex justify-between line-through currency opacity-50"
                 :id="kk">
                 <span class="mr-2">{{ kk }}</span>
@@ -285,11 +286,15 @@ export default {
 
             var ex_result = data.result;
 
+            var internationNumber = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: e,
+            });
+
             if (def.value != 1) {
-              document.getElementById(e).children[0].children[1].innerHTML = ex_result.toFixed(2) + "<br/ > <span class='text-2xs text-zinc-500'>1 " + this.current_currency + " = " + (ex_result / def.value).toFixed(4) + " " + e + "</span>";
+              document.getElementById(e).children[0].children[1].innerHTML = internationNumber.format(ex_result.toFixed(2)) + "<br/ > <span class='text-2xs text-zinc-500'>1 " + this.current_currency + " = " + (ex_result / def.value).toFixed(4) + " " + e + "</span>";
             } else {
-              document.getElementById(e).children[0].children[1].innerHTML =
-                def.value == 1 ? ex_result.toFixed(4) : ex_result.toLocaleString("en-US");
+              document.getElementById(e).children[0].children[1].innerHTML = ex_result.toFixed(4);
             }
 
             this.loading = false;
